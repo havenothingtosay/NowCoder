@@ -1,0 +1,11 @@
+{
+    "extends": "airbnb-base",
+    "plugins": [
+        "import",
+        "html"
+    ],
+    "rules": {
+        "linebreak-style": [0, "windows"],
+        "max-len": [0, 80, 4]
+    }
+}

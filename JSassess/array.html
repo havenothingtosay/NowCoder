@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>indexOf</title>
+</head>
+<body>
+  <input type="button" value="indexOf" onclick="array([1,2,3,4],5)" />
+  <input type="button" value="remove" onclick="remove([1,2,2,3,4,2,2],2)" />
+  <input type="button" value="removeWithoutCopy" onclick="removeWithoutCopy([1,2,2,3,4,2,2],2)" />
+  <input type="button" value="append" onclick="append([1,2,3,4],10)" />
+  <input type="button" value="truncate" onclick="truncate([1,2,3,4])" />
+  <input type="button" value="prepend" onclick="prepend([1,2,3,4],10)" />
+  <input type="button" value="curtail" onclick="curtail([1,2,3,4])" />
+  <input type="button" value="concat" onclick="concat([1,2,3,4],['a','b','c','1'])" />
+  <input type="button" value="insert" onclick="insert([1,2,3,4],'z',2)" />
+  <input type="button" value="count" onclick="count([1,2,3,4],2)" />
+  <input type="button" value="duplicates" onclick="duplicates([1,2,3,4,4,3,5,3,1])" />
+  <input type="button" value="square" onclick="square([1,2,3,4])" />
+  <input type="button" value="findAllOccurrences" onclick="findAllOccurrences('abcdefabc'.split(''),'a')" />
+  <script type="text/javascript">
+    function indexOf(arr, item) {
+      var result = -1;
+      for(var i=0;i<arr.length;i++){
+        if(item==arr[i]){
+            result = i;
+        }
+      }
+      // return result;
+      console.log(result);
+    }
+
+    function remove(arr, item) {
+      console.log(1);
+      var arr_new=[];
+      var j=0;
+      console.log(arr_new);
+      for(var i=0;i<arr.length;i++) {
+        if(arr[i]!=item){
+          console.log(2);
+          arr_new[j]=arr[i];
+          j++;
+          console.log(j);
+        }
+      }
+      console.log(arr_new);
+    }
+
+    function removeWithoutCopy(arr, item) {
+      for(var i=0;i<arr.length;i++){
+        console.log(arr);
+        console.log(i);
+        if(arr[i]==item){
+          console.log(arr);
+          arr.splice(i,1);
+          console.log(arr);
+          i--;
+          console.log(i);
+        }
+      }
+      console.log(arr);
+    }
+
+    function append(arr, item) {
+      var arr_new=arr.slice(0);
+      console.log(arr_new);
+      var arr1=arr;//指向同一内存
+      console.log(arr1);
+      arr_new.push(item);
+      console.log(arr_new);
+      arr1.push(item);
+      console.log(arr);
+    }
+
+    function truncate(arr) {
+      var arr_new=arr.slice(0);
+      arr_new.splice(arr_new.length-1,1);
+      console.log(arr_new);
+
+      //第2种方法
+//      return arr.slice(0,arr.length-1);
+    }
+
+    function prepend(arr, item) {
+      var arr_new=[item];
+      console.log(arr_new);
+      arr_new=arr_new.concat(arr);
+      console.log(arr_new);
+      //return [item].concat(arr)
+
+      //第2种方法
+      var a = arr.slice(0);
+      a.unshift(item);
+      console.log(a);
+
+      //第3种方法
+      var b = arr.slice(0);
+      b.splice(0,0,item);
+      console.log(b);
+    }
+
+    function curtail(arr) {
+      var arr_new=arr.slice(0);
+      console.log(arr_new);
+      arr_new.splice(0,1);
+      console.log(arr_new);
+
+      //第2种方法
+      arr.slice(1);
+    }
+
+    function concat(arr1, arr2) {
+      var arr_new=[];
+      arr_new=arr1.concat(arr2);
+      console.log(arr_new);
+    }
+
+    function insert(arr, item, index) {
+      var arr_new=arr.slice(0);
+      arr_new.splice(index,0,item);
+      console.log(arr_new);
+    }
+
+    function count(arr, item) {
+      var count=0;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i]==item){
+          count++;
+        }
+      }
+      console.log(count);
+
+      //第2种方法
+      arr.forEach(function(e){
+        //e为arr中的每一个元素，与item相等则count+1
+        e == item ? count++ : 0;
+      });
+
+      //第3种方法
+      return arr.filter(function(a){
+        return (a==item);
+      }).length
+    }
+
+    function duplicates(arr) {
+      var arr_new=[];
+      for(var i=0;i<arr.length;i++){
+        console.log('i:'+i);
+        for(var j=0;j<i;j++){
+          console.log('j:'+j);
+          if (arr[i]==arr[j] && arr_new.indexOf(arr[j])==-1){
+            arr_new.push(arr[j]);
+            console.log(arr_new);
+          }
+        }
+      }
+      console.log(arr_new.sort());
+
+      //第2种方法
+      var result = [];
+      arr.forEach(function(elem){
+        if(arr.indexOf(elem) !=arr.lastIndexOf(elem) && result.indexOf(elem) == -1){
+          result.push(elem);
+        }
+      });
+      console.log(result);
+
+      //第3种方法
+      //先排序，如果后一个与前一个相等且未保存，则保存。
+      var a=arr.sort(),b=[];
+      for(var z in a){
+        if(a[z]==a[z-1] && b.indexOf(a[z])==-1) b.push(a[z]);
+      }
+      return b;
+    }
+
+    function square(arr) {
+      var arr_new=[];
+      for(var i=0;i<arr.length;i++){
+        arr_new.push(arr[i]*arr[i]);
+      }
+      console.log(arr_new);
+    }
+
+    function findAllOccurrences(arr, target) {
+      var result=[];
+      for(var i in arr){
+        if(arr[i]==target){
+          result.push(i);
+        }
+      }
+      console.log(result.sort());
+    }
+  </script>
+</body>
+</html>
